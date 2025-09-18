@@ -1,0 +1,17 @@
+# ROS 2 artifacts
+build/
+install/
+log/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# C++ junk
+*.o
+*.so
+*.a
+
+# IDE configs
+.vscode/
+.idea/
