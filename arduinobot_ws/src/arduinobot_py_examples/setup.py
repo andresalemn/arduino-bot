@@ -24,6 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'simple_publisher = arduinobot_py_examples.simple_publisher:main',
+            'simple_subscriber = arduinobot_py_examples.simple_subscriber:main',
         ],
     },
 )
