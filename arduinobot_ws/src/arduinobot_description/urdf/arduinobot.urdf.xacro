@@ -125,5 +125,4 @@
         <mimic joint="joint_4" multiplier="-1"/>
     </joint>
 
-    
 </robot>
