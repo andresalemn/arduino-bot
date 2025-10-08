@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
+
+    <!-- Gazebo ros2_control plugin -->
+     <!-- <gazebo>
+      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+        <robot_param>robot_description</robot_param>
+        <robot_param_node>robot_state_publisher</robot_param_node>
+        <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
+      </plugin>
+    </gazebo> -->
+
+    <!-- Gazebo Sensors   -->
+    <gazebo reference="rgb_camera">
+        <sensor name="camera" type="camera">
+            <always_on>true</always_on>
+            <update_rate>30.0</update_rate>
+            <visualize>true</visualize>
+            <topic>image_raw</topic>
+            <gz_frame_id>/rgb_camera</gz_frame_id>
+            <camera name="camera">
+                <horizontal_fov>1.21126</horizontal_fov>
+                <image width="2304" height="1296"/>
+                <clip near= "0.02" far="300"/>
+            </camera>
+            <plugin filename="ignition-gazebo-sensors-system" name="ignition::gazebo::systems::Sensors">
+                <render_engine>ogre2</render_engine>
+            </plugin>
+        </sensor>        
+    </gazebo>
+</robot>

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from ament_index_python.packages import get_package_share_directory
+from ament_index_python.packages import get_package_share_directory, get_package_prefix
 
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, SetEnvironmentVariable, IncludeLaunchDescription
@@ -11,7 +11,7 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
 def generate_launch_description():
-    arduinobot_description_dir = get_package_share_directory("arduinobot_description")
+    arduinobot_description_dir = get_package_share_directory("arduinobot_description")    
     world_path = os.path.join(arduinobot_description_dir, "worlds", "my_world.sdf")
 
     model_arg = DeclareLaunchArgument(
@@ -54,17 +54,35 @@ def generate_launch_description():
     )
 
     gz_ros2_bridge = Node(
-        package="ros_gz_bridge",
-        executable="parameter_bridge",
-        arguments=[
-            "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock]"
-        ]
+            package="ros_gz_bridge",
+            executable="parameter_bridge",
+            arguments=[
+                "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
+                # "/image_raw@sensor_msgs/msg/Image[gz.msgs.Image",
+                # "/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo",
+            ]
     )
+    
+    # joint_state_publisher_gui = Node(
+    #     package="joint_state_publisher_gui",
+    #     executable="joint_state_publisher_gui"
+    # )
+
+
+    # rviz_node = Node(
+    #     package="rviz2",
+    #     executable="rviz2",
+    #     name="rviz2",
+    #     output="screen",
+    #     arguments=["-d", os.path.join(get_package_share_directory("arduinobot_description"), "rviz", "display.rviz")]
+    # )
 
     return LaunchDescription([
         model_arg,
         gazebo_resource_path,
         robot_state_publisher,
+        # joint_state_publisher_gui,
+        # rviz_node,
         gazebo,
         gz_spawn_entity,
         gz_ros2_bridge

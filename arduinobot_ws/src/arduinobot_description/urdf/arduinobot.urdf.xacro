@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
     
+
+    <!-- Include Gazebo Parameters -->
+    <xacro:include filename="$(find arduinobot_description)/urdf/arduinobot_gazebo.xacro" /> 
+
     <!-- Useful XACRO Variables (Properties) -->
     <xacro:property name="PI" value="3.14159265359" />
     <xacro:property name="effort" value="30.0" />
@@ -133,12 +137,19 @@
     </link>
 
     <link name="rgb_camera">
+        <xacro:default_inertial mass="0.001"/>
         <visual>
             <origin xyz="-0.07 0.12 0.12" rpy="-${PI/2} 0 -${PI/2}"/>
             <geometry>
                 <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
+        <collision>
+            <origin xyz="-0.07 0.12 0.12" rpy="-${PI/2} 0 -${PI/2}"/>
+            <geometry>
+                <mesh filename="package://arduinobot_description/meshes/pi_camera.STL" scale="0.01 0.01 0.01"/>
+            </geometry>            
+        </collision>
     </link>
     
     <!-- Joints -->  
