@@ -2,13 +2,20 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
 
     <!-- Gazebo ros2_control plugin -->
-     <!-- <gazebo>
-      <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-        <robot_param>robot_description</robot_param>
-        <robot_param_node>robot_state_publisher</robot_param_node>
-        <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
-      </plugin>
-    </gazebo> -->
+     <gazebo>
+        <xacro:if value="$(arg is_ignition)">
+            <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
+            <!-- <robot_param>robot_description</robot_param> -->
+            <!-- <robot_param_node>robot_state_publisher</robot_param_node> -->
+            <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
+            </plugin>
+        </xacro:if>
+        <xacro:unless value="$(arg is_ignition)">
+            <plugin filename="gz_ros2_control-system" name="gz_ros2_control-system::GazeboSimROS2ControlPlugin">
+                <parameters>$(find arduinobot_controller)/config/arduinobot_controllers.yaml</parameters>
+            </plugin>
+        </xacro:unless>
+    </gazebo>
 
     <!-- Gazebo Sensors   -->
     <gazebo reference="rgb_camera">
