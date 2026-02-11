@@ -6,11 +6,13 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(arduinobot_msgs REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
+find_package(rclpy REQUIRED)
 
 add_library(task_server SHARED src/task_server.cpp)
 target_include_directories(task_server PRIVATE
@@ -29,6 +31,8 @@ rclcpp_components_register_node(task_server
   EXECUTABLE task_server_node
 )
 
+ament_python_install_package(${PROJECT_NAME})
+
 install(
   DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}
@@ -41,5 +45,10 @@ install(TARGETS
   RUNTIME DESTINATION bin
 )
 
-ament_package()
+install(PROGRAMS
+  ${PROJECT_NAME}/task_server.py
+  ${PROJECT_NAME}/alexa_interface.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
+ament_package()
