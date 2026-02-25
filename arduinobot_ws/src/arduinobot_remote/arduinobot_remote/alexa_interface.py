@@ -1,4 +1,4 @@
-# !/usr/bin/env python3
+#!/usr/bin/env python3
 
 import rclpy
 from ask_sdk_core.dispatch_components import (

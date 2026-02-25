@@ -23,6 +23,10 @@ def generate_launch_description():
     use_python = LaunchConfiguration("use_python")
     is_sim = LaunchConfiguration("is_sim")
 
+    # Get directories
+    description_dir = get_package_share_directory("arduinobot_description")
+    moveit_dir = get_package_share_directory("arduinobot_moveit")
+
     task_server_node = Node(
         package="arduinobot_remote",
         executable="task_server_node",
@@ -30,17 +34,15 @@ def generate_launch_description():
         parameters=[{"use_sim_time": is_sim}]
     )
 
+    # ABSOLUTE PATHS for MoveItConfigsBuilder
     moveit_config = (
         MoveItConfigsBuilder("arduinobot", package_name="arduinobot_moveit")
-        .robot_description(file_path=os.path.join(
-            get_package_share_directory("arduinobot_description"),
-            "urdf",
-            "arduinobot.urdf.xacro"
-            )
-        )
-        .robot_description_semantic(file_path="config/arduinobot.srdf")
-        .trajectory_execution(file_path="config/moveit_controllers.yaml")
-        .moveit_cpp(file_path="config/planning_python_api.yaml")
+        .robot_description(file_path=os.path.join(description_dir, "urdf", "arduinobot.urdf.xacro"))
+        .robot_description_semantic(file_path=os.path.join(moveit_dir, "config", "arduinobot.srdf"))
+        .trajectory_execution(file_path=os.path.join(moveit_dir, "config", "moveit_controllers.yaml"))
+        # .planning_pipelines(default_planning_pipeline="ompl", pipelines=["ompl"], load_all=False)
+        .moveit_cpp(file_path=os.path.join(moveit_dir, "config", "planning_python_api.yaml"))
+        # .planning_pipelines(pipelines=["ompl"]) # Use this instead of moveit_cpp for generic setups
         .to_moveit_configs()
     )
 
@@ -55,6 +57,7 @@ def generate_launch_description():
     alexa_interface_node = Node(
         package="arduinobot_remote",
         executable="alexa_interface.py",
+        output="screen", # <--- Add this to see Flask's logs
         parameters=[{"use_sim_time": is_sim}]
     )
 
