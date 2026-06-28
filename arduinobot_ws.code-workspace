@@ -1,13 +1,12 @@
 {
 	"folders": [
 		{
+			"name": "Resources",
+			"path": "resources"
+		},
+		{
+			"name": "Arduinobot Workspace",
 			"path": "arduinobot_ws"
-		},
-		{
-			"path": "AntoBrandi"
-		},
-		{
-			"path": "arduinobot_ws/src/arduinobot_firmware"
 		},
 		{
 			"name": "Platform IO Project",
