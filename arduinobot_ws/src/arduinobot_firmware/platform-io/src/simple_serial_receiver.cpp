@@ -1,4 +1,4 @@
-#if TEST_UNO
+#if TEST_RECEIVER
 
 #include <Arduino.h>
 
