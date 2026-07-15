@@ -67,7 +67,7 @@ def generate_launch_description():
         value=[str(Path(arduinobot_description_dir).parent.resolve())],
     )
 
-    ros_distro = os.environ["ROS_DISTRO"]
+    # ros_distro = os.environ["ROS_DISTRO"]
     # Commented-out is_ignition / physics_engine flags kept for reference:
     # they were used to switch between Ignition (Humble) and gz-sim (Iron+)
     # backends. The current setup targets gz-sim (Iron / Jazzy).
