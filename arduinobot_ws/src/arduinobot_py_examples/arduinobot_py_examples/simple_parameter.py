@@ -20,7 +20,7 @@ class SimpleParameter(Node):
                 result.successful = True
 
             if param.name == "simple_string_param" and param.type_ == Parameter.Type.STRING:
-                self.get_logger().info("Param simple_string_param changed! New value is: %d" % param.value)
+                self.get_logger().info("Param simple_string_param changed! New value is: %s" % param.value)
                 result.successful = True
                 
         return result

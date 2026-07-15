@@ -4,7 +4,7 @@ from rclpy.lifecycle import Node, State, TransitionCallbackReturn
 from std_msgs.msg import String
 
 
-class SimpleLIfecycleNode(Node):
+class SimpleLifecycleNode(Node):
     def __init__(self, node_name, **kwargs):
         super().__init__(node_name, **kwargs)
 
@@ -44,7 +44,7 @@ class SimpleLIfecycleNode(Node):
 def main():
     rclpy.init()
     executor = rclpy.executors.SingleThreadedExecutor()
-    simple_lifecycle_node = SimpleLIfecycleNode("simple_lifecycle_node")
+    simple_lifecycle_node = SimpleLifecycleNode("simple_lifecycle_node")
     executor.add_node(simple_lifecycle_node)
     try:
         executor.spin()

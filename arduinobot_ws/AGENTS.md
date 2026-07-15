@@ -1,35 +1,131 @@
 # AGENTS.md
 
-## Package README Guidelines
+## Documentation Philosophy
 
-Each ROS 2 package should include a `README.md` containing:
+Follow the official ROS 2 documentation guidelines whenever practical. The goal is to produce documentation that is clear, consistent, maintainable, and compatible with the ROS 2 documentation ecosystem.
+
+Documentation should be written with future integration with `rosdoc2` in mind. Package documentation, C++ API documentation, and Python API documentation should follow the conventions expected by the ROS 2 community.
+
+---
+
+# Package Documentation Guidelines
+
+## README.md
+
+Each ROS 2 package must include a `README.md` at the package root (alongside `package.xml` and `CMakeLists.txt`).
+
+The README must contain:
 
 - A one- or two-sentence description of the package.
+- The package's purpose and responsibilities.
 - A brief overview of the package structure.
-- The package's responsibilities and scope.
-- The nodes it provides and their purpose.
-- Whether each node is a regular node or a lifecycle node, including its expected lifecycle behavior, when applicable.
+- The nodes provided by the package and their purpose.
+- Whether nodes are regular nodes or lifecycle nodes, when applicable.
 - Topics published and subscribed.
 - Services and actions provided or used, when applicable.
-- Configuration parameters and their default configuration files.
+- Parameters and their default configuration files, when applicable.
 - Available launch files and their purpose.
 - Basic build and run instructions, when applicable.
-- Key runtime dependencies and external requirements.
+- Package dependencies and external requirements, when applicable.
 
-Keep the README focused on the package itself: what it does, how to configure it, and how to use it. Detailed API documentation belongs in Doxygen comments rather than in the README.
+Keep the README focused on the package itself:
+- What the package does.
+- How to configure it.
+- How to build it.
+- How to run it.
+- How it integrates with other ROS 2 components.
 
-## Doxygen Documentation Guidelines
+Do not include detailed API documentation in the README. API documentation belongs in the source code and should be generated through documentation tooling.
 
-Use Doxygen comments to document the package's public API and implementation details, regardless of whether the package is implemented in C++, Python, or a combination of both.
+Write Markdown documentation using syntax compatible with Sphinx/MyST to facilitate future `rosdoc2` integration.
 
-Document:
+---
+
+# Source Code Documentation Guidelines
+
+Document public APIs using the documentation conventions appropriate for each implementation language.
+
+## C++
+
+Use Doxygen comments to document:
+
+- Public headers.
+- Public classes.
+- Public functions and methods.
+- Public enums, constants, and other public interfaces.
+- Non-obvious behavior or constraints of public APIs.
+
+Each public source file should begin with a Doxygen file comment describing:
+
+- The purpose of the file.
+- The main classes or functionality provided.
+- Any relevant design considerations.
+
+Avoid documenting trivial implementation details.
+
+---
+
+## Python
+
+Use Python docstrings compatible with Sphinx autodoc to document:
+
 - Public modules.
 - Public classes.
 - Public functions and methods.
-- Public interfaces exposed by the package.
-- Enums, constants, and other public types when their purpose is not immediately obvious.
+- Public ROS 2 interfaces exposed by the package.
 
-Do not use Doxygen comments in:
+Each public Python module should begin with a module-level docstring describing:
+
+- The purpose of the module.
+- The primary classes or functionality it provides.
+
+Docstrings should describe:
+- Purpose.
+- Expected inputs and outputs.
+- Important behavior.
+- Constraints or assumptions.
+
+Avoid documenting implementation details that are not relevant to users of the API.
+
+---
+
+# Additional Documentation
+
+For packages requiring documentation beyond the README and generated API documentation, use a `doc/` directory.
+
+Examples of content that belongs in `doc/`:
+
+- Tutorials.
+- Usage guides.
+- Architecture documentation.
+- Design documents.
+- Detailed configuration guides.
+- Integration guides.
+
+Additional documentation should be written in a format compatible with Sphinx to allow future integration with `rosdoc2`.
+
+---
+
+# Package Metadata Guidelines
+
+Keep `package.xml` metadata complete and up to date.
+
+Ensure the package metadata accurately describes:
+
+- Package description.
+- Maintainers.
+- License information.
+- URLs.
+- Dependencies.
+
+Package metadata is consumed by ROS tooling and documentation generation systems.
+
+---
+
+# Documentation Exclusions
+
+Do not use API documentation comments in:
+
 - `README.md`
 - `package.xml`
 - `CMakeLists.txt`
@@ -40,11 +136,69 @@ Do not use Doxygen comments in:
 - Resource files.
 - Test files, unless documenting a non-trivial testing utility.
 
-Use regular comments where they improve readability, such as explaining:
-- The purpose of a launch file.
-- Why nodes are launched in a particular order.
-- Non-obvious launch arguments or remappings.
-- Configuration choices in YAML files.
-- Complex implementation details that are not part of the public API.
+---
 
-Avoid comments that merely restate what the code already expresses. Keep the comments simple, leave complex explanaitions to de READMEs.
+# Regular Comments
+
+Use regular comments where they improve readability or explain design decisions.
+
+Examples:
+
+## Launch files
+
+Explain:
+
+- The purpose of the launch file.
+- Why nodes are launched in a particular order.
+- Non-obvious launch arguments.
+- Remappings.
+- Lifecycle transition behavior.
+
+## Build files
+
+Explain:
+
+- Non-obvious `CMakeLists.txt` logic.
+- Build options.
+- Plugin registration.
+- Installation decisions.
+
+## Configuration files
+
+Explain:
+
+- Parameter choices.
+- Hardware assumptions.
+- Non-obvious configuration values.
+
+## Source code
+
+Explain:
+
+- Complex algorithms.
+- Important design decisions.
+- Workarounds.
+- Constraints that are not obvious from the implementation.
+
+Avoid comments that merely restate what the code already expresses.
+
+---
+
+# General Documentation Principles
+
+- Document **what** a component does and **why** it exists.
+- Prefer documenting behavior, interfaces, and assumptions over implementation details.
+- Keep package documentation focused on ROS concepts:
+  - Nodes.
+  - Topics.
+  - Services.
+  - Actions.
+  - Parameters.
+  - Lifecycle behavior.
+  - Launch files.
+  - Dependencies.
+
+- Keep API documentation focused on public interfaces.
+- Keep file-level documentation concise and focused on the role of the file.
+- Ensure documentation remains accurate as the implementation evolves.
+- Prefer documentation that is compatible with official ROS 2 tooling and future `rosdoc2` adoption.
