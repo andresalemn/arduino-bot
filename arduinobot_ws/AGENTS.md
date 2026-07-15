@@ -4,7 +4,9 @@
 
 Follow the official ROS 2 documentation guidelines whenever practical. The goal is to produce documentation that is clear, consistent, maintainable, and compatible with the ROS 2 documentation ecosystem.
 
-Documentation should be written with future integration with `rosdoc2` in mind. Package documentation, C++ API documentation, and Python API documentation should follow the conventions expected by the ROS 2 community.
+- Documentation should follow ROS 2 conventions and remain compatible with future integration into tooling such as `rosdoc2`.
+
+- Package documentation, C++ API documentation, and Python API documentation should follow the conventions expected by the ROS 2 community.
 
 ---
 
@@ -132,7 +134,7 @@ Do not use API documentation comments in:
 - `setup.py`
 - `setup.cfg`
 - Launch files.
-- Configuration files (e.g., YAML).
+- Configuration files (e.g., YAML, XML, SDF, URDF, Xacro)
 - Resource files.
 - Test files, unless documenting a non-trivial testing utility.
 
@@ -170,6 +172,30 @@ Explain:
 - Parameter choices.
 - Hardware assumptions.
 - Non-obvious configuration values.
+
+## XML-based files
+
+Use XML comments to document non-obvious configuration choices in XML-based files such as:
+
+- SDF world files.
+- URDF robot descriptions.
+- Xacro macros.
+- Other XML-based ROS resources.
+
+Follow XML syntax rules when writing comments:
+
+- Comments must start with `<!--` and end with `-->`.
+- The sequence `--` is not allowed inside comments.
+- Avoid using dashed separators inside comments, as they can create invalid XML.
+
+Prefer separators that do not contain consecutive hyphens:
+
+```xml
+<!--
+  Physics Configuration
+  =====================
+-->
+```
 
 ## Source code
 

@@ -1,11 +1,52 @@
 <?xml version="1.0" ?>
 
+<!--
+  worlds/my_world.sdf - Custom Gazebo world for the ArduinoBot simulation.
+
+  Purpose
+  =======
+  The default Gazebo empty world starts with no physics configuration, which
+  causes the real-time factor (RTF) to run well below 1.0 on many machines
+  and requires manual adjustment through the Gazebo GUI on every session.
+
+  This world fixes that by pre-configuring the ODE physics engine with:
+    max_step_size  0.01 s  (10 ms integration step, stable for the robot
+                            servo-scale dynamics without being unnecessarily
+                            expensive)
+    real_time_factor 1.0   (target RTF; Gazebo will try to match wall time)
+
+  The world includes the minimum set of Gazebo system plugins required for
+  a functional simulation:
+    Physics          : runs the physics engine each step.
+    UserCommands     : enables GUI and service-based entity manipulation
+                       (spawn, move, delete models at runtime).
+    SceneBroadcaster : streams the scene state to connected GUI clients.
+    Contact          : enables contact/collision detection reporting.
+
+  Lighting
+  ========
+  A single directional "sun" light is included so the scene is visible
+  without additional configuration. Shadow casting is enabled.
+
+  Ground
+  ======
+  A 100 x 100 m static ground plane provides a collision surface and visual
+  floor for the robot to rest on.
+-->
+
 <sdf version="1.6">
   <world name="my_world">
+
+    <!-- Physics: ODE with a 10 ms step and RTF target of 1.0.
+         This avoids the sluggish simulation speeds seen with Gazebo default
+         world, eliminating the need to manually tune these values via the GUI
+         on each session. -->
     <physics name="1ms" type="ode">
       <max_step_size>0.01</max_step_size>
       <real_time_factor>1.0</real_time_factor>
     </physics>
+
+    <!-- Core Gazebo system plugins -->
     <plugin
       filename="ignition-gazebo-physics-system"
       name="gz::sim::systems::Physics">
@@ -23,6 +64,7 @@
       name="gz::sim::systems::Contact">
     </plugin>
 
+    <!-- Directional sun light positioned 10 m above the origin -->
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
@@ -37,6 +79,7 @@
       <direction>-0.5 0.1 -0.9</direction>
     </light>
 
+    <!-- Static 100 x 100 m ground plane -->
     <model name="ground_plane">
       <static>true</static>
       <link name="link">
