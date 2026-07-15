@@ -5,8 +5,33 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(trajectory_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
+
+# C++ slider control node
+add_executable(slider_control_cpp src/slider_control.cpp)
+ament_target_dependencies(slider_control_cpp rclcpp trajectory_msgs sensor_msgs)
+
+# Install Python package (module only)
+ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executable - RENAME removes the .py so ROS2 finds it as 'slider_control'
+install(
+  PROGRAMS
+    arduinobot_controller/slider_control.py
+  RENAME slider_control
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(
+  TARGETS slider_control_cpp
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(
   DIRECTORY config launch

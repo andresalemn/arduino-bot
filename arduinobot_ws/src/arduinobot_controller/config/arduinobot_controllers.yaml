@@ -6,6 +6,9 @@ controller_manager:
 
     gripper_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+      # ForwardCommandController is an alternative gripper controller that sends
+      # commands directly to the hardware interface without trajectory interpolation.
+      # Kept here for performance comparison once sim-to-real physical testing begins.
       # type: forward_command_controller/ForwardCommandController
 
     joint_state_broadcaster:
@@ -40,5 +43,3 @@ gripper_controller:
 
     open_loop_control: true
     allow_integration_in_goal_trajectories: true
-
-    # interface_name: position

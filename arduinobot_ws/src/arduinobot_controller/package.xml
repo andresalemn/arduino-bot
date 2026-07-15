@@ -3,18 +3,24 @@
 <package format="3">
   <name>arduinobot_controller</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ROS 2 controller package for the Arduinobot robot arm. Provides a ros2_control hardware interface for serial communication with an Arduino, joint trajectory controllers for the arm and gripper, and nodes for forwarding joint commands from GUI sliders to the controllers.</description>
   <maintainer email="andresaleman142@gmail.com">control</maintainer>
-  <license>TODO: License declaration</license>
+  <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
 
-  <exec_depend>ros2lauch</exec_depend>
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>sensor_msgs</depend>
+
+  <exec_depend>ros2launch</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>xacro</exec_depend>
   <exec_depend>controller_manager</exec_depend>
-  <!-- <exec_depend>arduinobot_description</exec_depend>
-  <exec_depend>joint_state_publisher_gui</exec_depend> -->
+  <exec_depend>arduinobot_description</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
@@ -22,4 +28,5 @@
   <export>
     <build_type>ament_cmake</build_type>
   </export>
+
 </package>

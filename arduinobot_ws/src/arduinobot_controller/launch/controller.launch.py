@@ -11,6 +11,10 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
+    # is_sim controls whether this launch file is being used with a Gazebo
+    # simulation or with real hardware. When True, robot_state_publisher and
+    # the ros2_control node are skipped because the simulation already
+    # provides them. When False (real hardware), both are started here.
     is_sim_arg = DeclareLaunchArgument(
         "is_sim",
         default_value="True"
@@ -18,6 +22,8 @@ def generate_launch_description():
 
     is_sim = LaunchConfiguration("is_sim")
 
+    # Read the robot description from the Xacro file at launch time so that
+    # any Xacro arguments or macros are resolved before being passed to nodes.
     robot_description = ParameterValue(
         Command(
             [
@@ -32,6 +38,8 @@ def generate_launch_description():
         value_type=str,
     )
 
+    # Only started on real hardware. In simulation, Gazebo publishes
+    # /robot_description and /tf directly through its own plugins.
     robot_state_publisher_node = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
@@ -39,6 +47,8 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description}],
     )
 
+    # Only started on real hardware. In simulation, ros2_control is loaded
+    # inside Gazebo via the GazeboRosControlPlugin.
     controller_manager = Node(
         package="controller_manager",
         executable="ros2_control_node",
@@ -54,6 +64,9 @@ def generate_launch_description():
         condition=UnlessCondition(is_sim),
     )
 
+    # Spawner nodes activate controllers through the controller_manager service
+    # interface. They work identically in simulation and on real hardware
+    # because the controller_manager API is the same in both cases.
     joint_state_broadcaster_spawner = Node(
         package="controller_manager",
         executable="spawner",
