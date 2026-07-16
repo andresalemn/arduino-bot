@@ -1,8 +1,10 @@
-#Goal
+# Action interface to compute the Fibonacci sequence up to a given order.
+
+# Goal: The number of steps/order of the Fibonacci sequence to generate (must be >= 1)
 int32 order
 ---
-#Result
+# Result: The full computed Fibonacci sequence
 int32[] sequence
 ---
-#Feedback
+# Feedback: The intermediate Fibonacci sequence computed so far
 int32[] partial_sequence

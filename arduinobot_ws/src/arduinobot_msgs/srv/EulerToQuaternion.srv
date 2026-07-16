@@ -1,10 +1,17 @@
-#Request
+# Service interface to convert Euler angles (roll, pitch, yaw) to a quaternion.
+
+# Request: Rotation around X-axis (roll) in radians
 float64 roll
+# Request: Rotation around Y-axis (pitch) in radians
 float64 pitch
+# Request: Rotation around Z-axis (yaw) in radians
 float64 yaw
 ---
-#Response
+# Response: X component of the corresponding quaternion
 float64 x
+# Response: Y component of the corresponding quaternion
 float64 y
+# Response: Z component of the corresponding quaternion
 float64 z
+# Response: W component of the corresponding quaternion
 float64 w

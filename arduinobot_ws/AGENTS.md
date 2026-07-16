@@ -116,22 +116,6 @@ Additional documentation should be written in a format compatible with Sphinx to
 
 ---
 
-# Package Metadata Guidelines
-
-Keep `package.xml` metadata complete and up to date.
-
-Ensure the package metadata accurately describes:
-
-- Package description.
-- Maintainers.
-- License information.
-- URLs.
-- Dependencies.
-
-Package metadata is consumed by ROS tooling and documentation generation systems.
-
----
-
 # Documentation Exclusions
 
 Do not use API documentation comments in:
@@ -205,6 +189,22 @@ Prefer separators that do not contain consecutive hyphens:
 -->
 ```
 
+# Package Metadata Guidelines
+
+Keep `package.xml` metadata complete and up to date.
+
+Ensure the package metadata accurately describes:
+
+- Package description.
+- Maintainers.
+- License information.
+- URLs.
+- Dependencies.
+
+Package metadata is consumed by ROS tooling and documentation generation systems.
+
+---
+
 ## Source code
 
 Explain:
@@ -217,6 +217,55 @@ Explain:
 Avoid comments that merely restate what the code already expresses.
 
 ---
+
+## ROS Interface Documentation
+
+Document every custom `.msg`, `.srv`, and `.action` file.
+
+- Begin each file with a brief one- or two-line description of the interface's purpose.
+- Add a concise single-line comment for every field describing its meaning.
+- Include units, valid ranges, or allowed values when applicable.
+- Keep comments descriptive and implementation-independent.
+
+Example:
+
+```action
+# Executes a predefined task and reports execution progress.
+#
+# Goal:
+#   task_number: Identifier of the task to execute.
+#
+# Result:
+#   success: True if the task completed successfully.
+#
+# Feedback:
+#   percentage: Current completion percentage [0-100].
+
+# Goal
+int32 task_number
+
+---
+# Result
+bool success
+
+---
+# Feedback
+int32 percentage
+```
+
+## Documentation Links
+
+- Always use relative Markdown links for files within the repository.
+- Never use absolute filesystem paths (e.g., `file:///...`) or machine-specific paths.
+- Preserve heading anchors (e.g., `README.md#actions`) when linking to sections of other READMEs.
+
+Examples:
+
+```markdown
+[Package README](../arduinobot_cpp_examples/README.md)
+[Actions](../arduinobot_cpp_examples/README.md#actions)
+[Action Definition](action/ArduinobotTask.action)
+```
 
 # General Documentation Principles
 

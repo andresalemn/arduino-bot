@@ -1,8 +1,10 @@
-# Goal
+# Executes a predefined robot arm task and reports execution progress.
+
+# Goal: The ID of the task to execute
 int32 task_number
 ---
-# Result
+# Result: Completion status
 bool success
 ---
-# Feedback
+# Feedback: Current completion progress percentage [0 to 100]
 int32 percentage

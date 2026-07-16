@@ -1,6 +1,9 @@
-#Request
+# Service interface to compute the sum of two 64-bit integers.
+
+# Request: First integer to add
 int64 a
+# Request: Second integer to add
 int64 b
 ---
-#Response
+# Response: The sum of the two integers (a + b)
 int64 sum
