@@ -6,16 +6,25 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 from ament_index_python.packages import get_package_share_directory
 
+"""
+Launch file to spin up MoveIt 2 motion planning for Arduinobot.
+Lunches the move_group node and RViz2 visualization with the configured semantic details, 
+kinematics, joint limits, and controller settings.
+"""
 
 def generate_launch_description():
 
+    # Argument to toggle between simulation and hardware time
     is_sim = LaunchConfiguration("is_sim")
     
     is_sim_arg = DeclareLaunchArgument(
         "is_sim",
-        default_value="True"
+        default_value="True",
+        description="Whether to use simulation (use_sim_time)"
     )
 
+    # Build the MoveIt 2 configuration using MoveItConfigsBuilder.
+    # Reads kinematic, joint limit, and controller configuration files.
     moveit_config = (
         MoveItConfigsBuilder("arduinobot", package_name="arduinobot_moveit")
         .robot_description(file_path=os.path.join(
@@ -30,6 +39,7 @@ def generate_launch_description():
         .to_moveit_configs()
     )
 
+    # Start the Move Group node which exposes action servers for planning and control
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
@@ -40,7 +50,7 @@ def generate_launch_description():
         arguments=["--ros-args", "--log-level", "info"],
     )
 
-    # RViz
+    # Start RViz2 configured with MoveIt display plugins
     rviz_config = os.path.join(
         get_package_share_directory("arduinobot_moveit"),
             "config",
