@@ -1,5 +1,13 @@
 # AGENTS.md
 
+## Repository Conventions
+
+- This repository is licensed under the MIT License.
+- Whenever a file requires specifying a software license (e.g., `package.xml`, `setup.py`, `setup.cfg`, `pyproject.toml`, or source file headers when applicable), use `MIT`.
+- Do not use or introduce any other license unless explicitly instructed.
+
+---
+
 ## Documentation Philosophy
 
 Follow the official ROS 2 documentation guidelines whenever practical. The goal is to produce documentation that is clear, consistent, maintainable, and compatible with the ROS 2 documentation ecosystem.
