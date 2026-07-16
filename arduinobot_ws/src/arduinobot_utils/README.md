@@ -1,6 +1,6 @@
 # arduinobot_utils
 
-Helper utilities for the Arduinobot robot arm package. It provides services to convert between Euler angles and quaternions in both C++ and Python implementations.
+Helper utilities for the Arduinobot robot arm project. It provides services to convert between Euler angles and quaternions in both C++ and Python implementations.
 
 ## Purpose and Responsibilities
 The main responsibility of this package is to handle mathematical coordinate and rotation transformations (specifically between Euler angles and Quaternions) required by the Arduinobot simulation, control, and telemetry nodes. It encapsulates these conversions in ROS 2 services so they can be consumed by other nodes in the system.
@@ -22,15 +22,15 @@ arduinobot_utils/
 
 ### `angles_conversion_service_server` / `angles_conversion_service_server_cpp`
 - **Type**: Regular ROS 2 Nodes.
-- **Languages**: Python (implemented in [angle_conversion.py](file:///home/control/ros2/arduino-bot/arduinobot_ws/src/arduinobot_utils/arduinobot_utils/angle_conversion.py)) and C++ (implemented in [angle_conversion.cpp](file:///home/control/ros2/arduino-bot/arduinobot_ws/src/arduinobot_utils/src/angle_conversion.cpp)).
+- **Languages**: Python (implemented in [angle_conversion.py](arduinobot_utils/angle_conversion.py)) and C++ (implemented in [src/angle_conversion.cpp](src/angle_conversion.cpp)).
 - **Description**: Exposes services to perform 3D rotation representation conversions.
 
 ### Services Provided
 
-- **`euler_to_quaternion`** ([arduinobot_msgs/srv/EulerToQuaternion](file:///home/control/ros2/arduino-bot/arduinobot_ws/src/arduinobot_msgs/srv/EulerToQuaternion.srv))
+- **`euler_to_quaternion`** ([arduinobot_msgs/srv/EulerToQuaternion](../arduinobot_msgs/srv/EulerToQuaternion.srv))
   Converts Euler angles (roll, pitch, yaw) in radians to a quaternion (x, y, z, w).
   
-- **`quaternion_to_euler`** ([arduinobot_msgs/srv/QuaternionToEuler](file:///home/control/ros2/arduino-bot/arduinobot_ws/src/arduinobot_msgs/srv/QuaternionToEuler.srv))
+- **`quaternion_to_euler`** ([arduinobot_msgs/srv/QuaternionToEuler](../arduinobot_msgs/srv/QuaternionToEuler.srv))
   Converts a quaternion (x, y, z, w) to Euler angles (roll, pitch, yaw) in radians.
 
 ## Dependencies

@@ -3,7 +3,7 @@
 <package format="3">
   <name>arduinobot_utils</name>
   <version>0.0.0</version>
-  <description>Helper utilities for the Arduinobot robot arm package, including services for converting between Euler angles and quaternions in C++ and Python.</description>
+  <description>Helper utilities for the Arduinobot robot arm project, including services for converting between Euler angles and quaternions in C++ and Python.</description>
   <maintainer email="andresaleman142@gmail.com">control</maintainer>
   <license>MIT</license>
 
