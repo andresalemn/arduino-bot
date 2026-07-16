@@ -16,7 +16,7 @@ setup(
     maintainer='control',
     maintainer_email='andresaleman142@gmail.com',
     description='ROS 2 controller package for the Arduinobot robot arm. Provides a ros2_control hardware interface for serial communication with an Arduino, joint trajectory controllers for the arm and gripper, and nodes for forwarding joint commands from GUI sliders to the controllers.',
-    license='Apache-2.0',
+    license='MIT',
     extras_require={
         'test': [
             'pytest',
