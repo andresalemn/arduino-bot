@@ -6,7 +6,7 @@
     <ros2_control type="system" name="RobotSystem">
 
         <!-- ros2_control Gazebo -->
-        <xacro:if value="$(arg is_ignition)">
+        <xacro:if value="$(arg is_sim)">
             <hardware>
                 <plugin>ign_ros2_control/IgnitionSystem</plugin>
             </hardware>
@@ -19,20 +19,14 @@
                 </command_interface>
             </joint>
         </xacro:if>
-        <xacro:unless value="$(arg is_ignition)">
-            <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-            </hardware>    
-        </xacro:unless>
 
         <!-- ros2_control Real Robot -->
-        <!-- <xacro:unless value="$(arg is_sim)">
+        <xacro:unless value="$(arg is_sim)">
             <hardware>
                 <plugin>arduinobot_controller/ArduinobotInterface</plugin>
                 <param name="port">/dev/ttyACM0</param>
             </hardware>
         </xacro:unless>
-         -->
 
         <!-- ros2_control Common Interfaces -->
         <joint name="joint_1">

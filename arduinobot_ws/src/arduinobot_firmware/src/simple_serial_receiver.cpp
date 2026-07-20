@@ -1,3 +1,11 @@
+/**
+ * @file simple_serial_receiver.cpp
+ * @brief ROS 2 Node that receives serial data from Arduino and publishes it.
+ *
+ * This node opens a serial connection to the designated port, polls the serial
+ * port at 100 Hz, reads lines of text, and publishes them as ROS 2 String messages.
+ */
+
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 
@@ -7,10 +15,19 @@
 
 using namespace std::chrono_literals;
 
-
+/**
+ * @class SimpleSerialReceiver
+ * @brief Node that listens to serial port signals and broadcasts them onto a ROS 2 topic.
+ */
 class SimpleSerialReceiver : public rclcpp::Node
 {
 public:
+  /**
+   * @brief Construct a new Simple Serial Receiver object.
+   *
+   * Declares parameters, opens the serial connection at 115200 baud,
+   * sets up the publisher, and starts a wall timer to poll for data.
+   */
   SimpleSerialReceiver() : Node("simple_serial_receiver")
   {
     declare_parameter<std::string>("port", "/dev/ttyUSB0");
@@ -24,11 +41,22 @@ public:
     timer_ = create_wall_timer(0.01s, std::bind(&SimpleSerialReceiver::timerCallback, this));
   }
 
+  /**
+   * @brief Destroy the Simple Serial Receiver object.
+   *
+   * Ensures the serial interface connection is closed correctly.
+   */
   ~SimpleSerialReceiver()
   {
     arduino_.Close();
   }
 
+  /**
+   * @brief Callback function executed by the timer to poll the serial device.
+   *
+   * Verifies if any bytes are available to read. If yes, reads the line
+   * and publishes it on the 'serial_receiver' topic.
+   */
   void timerCallback()
   {
     if(rclcpp::ok() && arduino_.IsDataAvailable())
@@ -55,11 +83,3 @@ int main(int argc, char* argv[])
   rclcpp::shutdown();
   return 0;
 }
-
-
-    //  Test this node:
-    //  control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 run arduinobot_firmware simple_serial_receiver --ros-args -p port:=/dev/ttyACM0 
-
-    //  In a second terminal:
-    //  control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic echo /serial_receiver 
-

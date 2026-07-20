@@ -1,13 +1,30 @@
+/**
+ * @file simple_serial_transmitter.cpp
+ * @brief ROS 2 Node that receives ROS messages and writes them to a serial port.
+ *
+ * This node subscribes to a String topic and relays any received data directly
+ * over serial to an attached Arduino.
+ */
+
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
 #include <libserial/SerialPort.h>
 
 using std::placeholders::_1;
 
-
+/**
+ * @class SimpleSerialTransmitter
+ * @brief Node that subscribes to 'serial_transmitter' and forwards incoming messages to a serial interface.
+ */
 class SimpleSerialTransmitter : public rclcpp::Node
 {
 public:
+  /**
+   * @brief Construct a new Simple Serial Transmitter object.
+   *
+   * Declares target port parameters, subscribes to the transmitter topic, and open
+   * the serial connection.
+   */
   SimpleSerialTransmitter() : Node("simple_serial_transmitter")
   {
     declare_parameter<std::string>("port", "/dev/ttyACM0");
@@ -20,11 +37,23 @@ public:
     arduino_.SetBaudRate(LibSerial::BaudRate::BAUD_115200);    
   }
 
+  /**
+   * @brief Destroy the Simple Serial Transmitter object.
+   *
+   * Ensures that the serial communication port is closed.
+   */
   ~SimpleSerialTransmitter()
   {
     arduino_.Close();
   }
 
+  /**
+   * @brief Callback function triggered when a new String message is received.
+   *
+   * Writes the message payload bytes onto the active serial line.
+   *
+   * @param msg The incoming String message.
+   */
   void msgCallback(const std_msgs::msg::String &msg)
   {
     RCLCPP_INFO_STREAM(get_logger(), "New message recieved, publishing on serial port: " << msg.data);
@@ -34,7 +63,6 @@ public:
 private:
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr sub_;
   LibSerial::SerialPort arduino_;
-
 };
 
 
@@ -45,13 +73,3 @@ int main(int argc, char * argv[])
   rclcpp::shutdown();
   return 0;
 }
-
-    /* 
-        How to call this node:  
-        control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 run arduinobot_firmware simple_serial_transmitter --ros-args -p port:=/dev/ttyACM0
-
-        In a second terminal:
-        control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic pub /serial_transmitter std_msgs/msg/String "data: '0'" 
-        control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic pub /serial_transmitter std_msgs/msg/String "data: '1'"
-
-    */

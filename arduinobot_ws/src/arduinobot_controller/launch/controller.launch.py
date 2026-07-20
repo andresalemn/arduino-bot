@@ -15,10 +15,7 @@ def generate_launch_description():
     # simulation or with real hardware. When True, robot_state_publisher and
     # the ros2_control node are skipped because the simulation already
     # provides them. When False (real hardware), both are started here.
-    is_sim_arg = DeclareLaunchArgument(
-        "is_sim",
-        default_value="True"
-    )
+    is_sim_arg = DeclareLaunchArgument("is_sim", default_value="True")
 
     is_sim = LaunchConfiguration("is_sim")
 
@@ -33,6 +30,7 @@ def generate_launch_description():
                     "urdf",
                     "arduinobot.urdf.xacro",
                 ),
+                "is_sim:=False",
             ]
         ),
         value_type=str,
@@ -40,11 +38,11 @@ def generate_launch_description():
 
     # Only started on real hardware. In simulation, Gazebo publishes
     # /robot_description and /tf directly through its own plugins.
-    robot_state_publisher_node = Node(
+    robot_state_publisher = Node(
         package="robot_state_publisher",
         executable="robot_state_publisher",
-        condition=UnlessCondition(is_sim),
         parameters=[{"robot_description": robot_description}],
+        condition=UnlessCondition(is_sim),
     )
 
     # Only started on real hardware. In simulation, ros2_control is loaded
@@ -53,8 +51,7 @@ def generate_launch_description():
         package="controller_manager",
         executable="ros2_control_node",
         parameters=[
-            {"robot_description": robot_description,
-             "use_sim_time": is_sim},
+            {"robot_description": robot_description, "use_sim_time": is_sim},
             os.path.join(
                 get_package_share_directory("arduinobot_controller"),
                 "config",
@@ -92,7 +89,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             is_sim_arg,
-            robot_state_publisher_node,
+            robot_state_publisher,
             controller_manager,
             joint_state_broadcaster_spawner,
             arm_controller_spawner,

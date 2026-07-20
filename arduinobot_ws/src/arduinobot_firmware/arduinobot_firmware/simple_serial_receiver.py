@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Module providing a ROS 2 node to receive serial messages from Arduino.
+"""
 import serial
 import rclpy
 from rclpy.node import Node
@@ -6,7 +9,19 @@ from std_msgs.msg import String
 
 
 class SimpleSerialReceiver(Node):
+    """
+    ROS 2 Node that reads lines from a serial port and publishes them as Strings.
+
+    This node polls the serial interface at a fixed frequency, decodes the incoming
+    bytes as UTF-8, and broadcasts the data on the 'serial_receiver' topic.
+    """
     def __init__(self):
+        """
+        Initialize the SimpleSerialReceiver node.
+
+        Declares 'port' and 'baudrate' parameters, opens the serial connection,
+        and initializes the publisher and a timer to check for incoming data.
+        """
         super().__init__("simple_serial_receiver")
 
         self.declare_parameter("port", "/dev/ttyUSB0")
@@ -22,6 +37,11 @@ class SimpleSerialReceiver(Node):
         self.timer_ = self.create_timer(self.frequency_, self.timerCallback)
 
     def timerCallback(self):
+        """
+        Timer callback that executes at 100Hz to read data from the serial port.
+
+        Decodes the serial line as utf-8 and publishes it to the 'serial_receiver' topic.
+        """
         if rclpy.ok() and self.arduino_.is_open:
             data = self.arduino_.readline()
 
@@ -47,10 +67,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    # Test this node:
-    # control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 run arduinobot_firmware simple_serial_receiver.py --ros-args -p port:=/dev/ttyACM0 
-
-    # In a second terminal:
-    # control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic echo /serial_receiver 
-

@@ -34,13 +34,16 @@ arduinobot_controller/
 │   └── controller_launch.md     # Step-by-step launch file usage guide
 │   └── slider_controller.md     # Step-by-step launch file usage guide
 ├── include/
-│   └── arduinobot_interface.hpp  # ros2_control hardware interface header
+│   └── arduinobot_controller/
+│       └── arduinobot_interface.hpp  # ros2_control hardware interface header
 ├── launch/
 │   ├── controller.launch.py    # ros2_control stack launch
 │   └── slider_controller.launch.py  # Slider GUI + controller launch
 ├── src/
+│   ├── arduinobot_interface.cpp # ros2_control hardware interface implementation
 │   └── slider_control.cpp      # C++ slider control node
 ├── CMakeLists.txt
+├── arduinobot_controller.xml   # ros2_control plugin declaration file
 ├── package.xml
 ├── setup.cfg
 └── setup.py
@@ -184,6 +187,10 @@ ros2 launch arduinobot_controller slider_controller.launch.py use_cpp:=True
 | `rclpy` | build + exec | Python ROS 2 client library. |
 | `trajectory_msgs` | build + exec | `JointTrajectory` message type. |
 | `sensor_msgs` | build + exec | `JointState` message type. |
+| `hardware_interface` | build + exec | C++ interface definitions for ros2_control. |
+| `rclcpp_lifecycle` | build + exec | ROS 2 lifecycle management support. |
+| `pluginlib` | build + exec | C++ library for loading plugins dynamically. |
+| `libserial-dev` | build + exec | Library for serial communication with the microcontroller. |
 | `controller_manager` | exec | Manages the ros2_control lifecycle. |
 | `robot_state_publisher` | exec | Publishes TF from the URDF (real hardware only). |
 | `joint_state_publisher_gui` | exec | Slider panel used by `slider_controller.launch.py`. |

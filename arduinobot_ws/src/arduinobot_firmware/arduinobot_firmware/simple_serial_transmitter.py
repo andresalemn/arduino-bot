@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+"""
+Module providing a ROS 2 node to transmit serial messages to Arduino.
+"""
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
@@ -6,8 +9,17 @@ import serial
 
 
 class SimpleSerialTransmitter(Node):
+    """
+    ROS 2 Node that subscribes to a topic and forwards incoming string messages to a serial port.
+    """
 
     def __init__(self):
+        """
+        Initialize the SimpleSerialTransmitter node.
+
+        Declares 'port' and 'baud_rate' parameters, opens the serial connection,
+        and sets up a subscription to the 'serial_transmitter' topic.
+        """
         super().__init__("simple_serial_transmitter")
         
         self.declare_parameter("port", "/dev/ttyACM0")
@@ -20,6 +32,13 @@ class SimpleSerialTransmitter(Node):
         self.arduino_ = serial.Serial(port=self.port_, baudrate=self.baud_rate_, timeout=0.1)
 
     def msgCallback(self, msg):
+        """
+        Callback triggered whenever a new String message is received.
+
+        Encodes the message data as UTF-8 and writes it directly to the serial port.
+
+        :param msg: The incoming String message.
+        """
         self.get_logger().info("I heard: %s" % msg.data)
         self.arduino_.write(msg.data.encode("utf-8"))
 
@@ -36,11 +55,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-    # How to call this node:
-    # control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 run arduinobot_firmware simple_serial_transmitter.py --ros-args -p port:=/dev/ttyACM0
-
-    # In a second terminal:
-    # control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic pub /serial_transmitter std_msgs/msg/String "data: '0'" 
-    # control@alienware:~/ros2/arduino-bot/arduinobot_ws$ ros2 topic pub /serial_transmitter std_msgs/msg/String "data: '1'"
