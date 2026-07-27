@@ -43,17 +43,11 @@ void loop() {
 }
 
 // Helper: convert an angle (0-180) to a pulse length and send it
-// void writeServoAngle(uint8_t channel, int angle) {
-//   angle = constrain(angle, 0, 180);
-//   int pulse = map(angle, 0, 180, SERVOMIN, SERVOMAX);
-//   pwm.setPWM(channel, 0, pulse);
-// }
-
 void writeServoAngle(uint8_t channel, int angle) {
   angle = constrain(angle, 0, 180);
-  Serial.print("Commanded angle: "); Serial.println(angle);
+  // Serial.print("Commanded angle: "); Serial.println(angle);
   int pulse = map(angle, 0, 180, SERVOMIN, SERVOMAX);
-  Serial.print("Pulse: "); Serial.println(pulse);
+  // Serial.print("Pulse: "); Serial.println(pulse);
   pwm.setPWM(channel, 0, pulse);
 }
 
