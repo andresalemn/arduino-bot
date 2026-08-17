@@ -91,6 +91,7 @@ PlatformIO environments are configured in [`platform-io/platformio.ini`](platfor
   - `-D SERVO_TEST`: Runs the eight-servo sweep routine.
   - `-D SIMPLE_SERVO`: Runs single-servo angle control.
   - `-D FIND_SERVO_PULSE`: Runs the interactive pulse calibration utility.
+  - `-D ROBOT_CONTROL`: Runs the complete robot multi-joint controller matching the ROS 2 serial interface.
 
 ---
 

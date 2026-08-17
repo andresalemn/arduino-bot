@@ -3,13 +3,16 @@
 <package format="3">
   <name>arduinobot_bringup</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Bringup package for the Arduinobot robot arm, providing top-level launch configurations.</description>
   <maintainer email="andresaleman142@gmail.com">control</maintainer>
-  <license>TODO: License declaration</license>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>ros2launch</depend>
+  <exec_depend>arduinobot_controller</exec_depend>
+  <exec_depend>arduinobot_moveit</exec_depend>
+  <exec_depend>arduinobot_remote</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

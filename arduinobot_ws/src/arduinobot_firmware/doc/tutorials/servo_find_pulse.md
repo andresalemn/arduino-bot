@@ -78,12 +78,12 @@ If you're driving multiple servos with different calibration values, use a looku
 
 Fill in the pulse values you find for each servo below. Label the physical servo body (tape, marker, etc.) to match the joint name so you never mix up calibration data between units.
 
-| Joint | Channel | SERVOMIN (pulse @ 0°)  | SERVOMAX (pulse @ 180°)   | Notes                 |
-|-------|---------|------------------------|---------------------------|-----------------------|
-| J1    |16       |110                     |485                        |Joint at the fixed base|
-| J2    |         |                        |                           |                       |
-| J3    |         |                        |                           |                       |
-| J4    |         |                        |                           |                       |
+| Joint | Channel | SERVOMIN (pulse @ 0°) | SERVOMID (pulse @ 90°) | SERVOMAX (pulse @ 180°) | Notes                 |
+|-------|---------|-----------------------|------------------------|-------------------------|-----------------------|
+| J1    |15       |110                    |            -           |485                      |Joint at the fixed base|
+| J2    |11       |120                    |            -           |490                      |Shoulder joint         |
+| J3    |7        |110                    |            -           |475                      |Elbow joint            |
+| J4    |3        |97                     |280                     |472                      |Claw or gripper        |
 
 Feel free to reuse this table format for any additional servos you add later — just extend it with more rows (J5, J6, etc.) as your robot grows.
 

@@ -97,13 +97,13 @@ is ready.
 
 ## ros2_control interfaces
 
-Defined in `arduinobot_ros2_control.xacro`. The hardware plugin is selected
-at xacro-evaluation time via the `is_sim` argument:
+Defined in `arduinobot_ros2_control.xacro`. The hardware plugin and simulation backend are selected
+at xacro-evaluation time via the `is_sim` and `is_ignition` arguments:
 
-| Condition | Hardware plugin |
-|---|---|
-| `is_sim=true` (default) | `ign_ros2_control/IgnitionSystem` |
-| `is_sim=false` | `arduinobot_controller/ArduinobotInterface` (Real serial hardware interface) |
+| Argument | Default | Description |
+|---|---|---|
+| `is_sim` | `true` | Selects simulation hardware plugin (`ign_ros2_control/IgnitionSystem` or `gz_ros2_control-system::GazeboSimROS2ControlPlugin`) when `true`, and real serial hardware plugin (`arduinobot_controller/ArduinobotInterface`) when `false`. |
+| `is_ignition` | `true` | Selects the older Ignition Gazebo integration (`ign_ros2_control`) when `true`, and the newer `gz_ros2_control` integration when `false`. |
 
 Joints exposed to `ros2_control`:
 

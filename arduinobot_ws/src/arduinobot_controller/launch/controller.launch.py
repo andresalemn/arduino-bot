@@ -30,7 +30,7 @@ def generate_launch_description():
                     "urdf",
                     "arduinobot.urdf.xacro",
                 ),
-                "is_sim:=False",
+                " is_sim:=False",
             ]
         ),
         value_type=str,
