@@ -21,9 +21,9 @@ This hardware modification offers several benefits:
 *   **Dedicated Power Delivery:** Allows external 5V/6V power to be supplied directly to the servo terminals, protecting the Arduino from current spikes and brownouts.
 *   **Pin Optimization:** Frees up the remaining Arduino digital and analog pins for sensors, telemetry, or future expansions.
 
-<!-- Below is the Fritzing layout of the modified circuitry used for this project:
+Below is the Fritzing layout of the modified circuitry used for this project:
 
-![Fritzing Circuit Layout](./resources/Electronics/servo-test_bb.jpg) -->
+![Fritzing Circuit Layout](./resources/Electronics/robot-electronics_bb.jpg)
 
 ---
 
