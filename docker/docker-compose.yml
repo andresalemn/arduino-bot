@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  dev:
+    container_name: arduinobot-dev
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: dev
+      args:
+        USER_UID: 1000
+        USER_GID: 1000
+    volumes:
+      - ..:/home/developer/workspace:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - QT_X11_NO_MITSHM=1
+      - ROS_LOCALHOST_ONLY=1
+    ipc: host
+    command: /bin/bash -c "while sleep 1000; do :; done"
+
+  sim:
+    profiles: ["sim"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      target: sim
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - QT_X11_NO_MITSHM=1
+      - ROS_LOCALHOST_ONLY=1
+    ipc: host

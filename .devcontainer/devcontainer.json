@@ -1,0 +1,42 @@
+{
+  "name": "arduinobot ROS2 dev-container",
+  "dockerComposeFile": [
+    "../docker/docker-compose.yml"
+  ],
+  "service": "dev",
+  "runServices": [
+    "dev"
+  ],
+  "workspaceFolder": "/home/developer/workspace",
+  "remoteUser": "developer",
+  "updateRemoteUserUID": true,
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "C_Cpp.default.includePath": [
+          "/opt/ros/humble/include/**",
+          "${workspaceFolder}/arduinobot_ws/src/**"
+        ],
+        "C_Cpp.default.cppStandard": "c++17",
+        "python.analysis.typeCheckingMode": "basic"
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "ranch-hand-robotics.ros-2",
+        "redhat.vscode-yaml",
+        "cschlosser.doxdocgen",
+        "morningfrog.urdf-visualizer",
+        "platformio.platformio-ide",
+        "aaron-bond.better-comments",
+        "vivaxy.vscode-conventional-commits",
+        "jakobhoeg.vscode-pokemon"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -c 'cd arduinobot_ws && source /opt/ros/humble/setup.bash && rosdep update && rosdep install --from-paths src --ignore-src -r -y --rosdistro humble || true && colcon build --symlink-install'"
+}

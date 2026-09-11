@@ -55,34 +55,47 @@ Here is a breakdown of the main directories and their contents:
 
 ---
 
-## Getting Started
+## Usage & Execution Modes
 
-To compile and execute the packages inside this repository, you need a working installation of **ROS 2 Humble** on Ubuntu 22.04.
+Depending on your workflow and setup preference, you can run and develop on Arduinobot in two primary ways:
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/andresalemn/arduino-bot.git
-    cd arduino-bot
-    ```
-2.  **Build the workspace:**
-    ```bash
-    cd arduinobot_ws
-    colcon build --symlink-install
-    ```
-3.  **Source the setup files:**
-    ```bash
-    source install/setup.bash
-    ```
-4.  **Run the robot in simulation:**
-    To spin up Gazebo, MoveIt 2 planners, and RViz2 simultaneously:
-    ```bash
-    ros2 launch arduinobot_bringup simulated_robot.launch.py
-    ```
-5.  **Run the real robot:**
-    With your Arduino connected via serial and loaded with the `ROBOT_CONTROL` firmware:
-    ```bash
-    ros2 launch arduinobot_bringup real_robot.launch.py
-    ```
+### Option A: Containerized Environment (Docker / Dev Container) — Recommended for Sim
+
+Avoid installing ROS 2, Gazebo, or MoveIt 2 directly on your host machine.
+
+1. **VS Code Dev Container (Live Development):**
+   - Open this repo in VS Code and accept **"Reopen in Container"**.
+   - Workspace build and ROS 2 setup source automatically inside the container.
+   - Run simulation inside the container terminal:
+     ```bash
+     cd arduinobot_ws
+     ros2 launch arduinobot_bringup simulated_robot.launch.py
+     ```
+2. **Standalone Simulation Demo (Pre-built Evaluation Image):**
+   - Run Gazebo + MoveIt 2 simulation without building locally.
+   - See [Docker Simulation Demo Guide](./docs/docker/03-simulation-demo.md).
+
+> For detailed Docker architecture, WSLg GUI configuration, and troubleshooting, see the [Docker Documentation](./docs/docker/01-overview.md).
+
+### Option B: Native Host Environment (Ubuntu 22.04 + ROS 2 Humble) — Required for Real Hardware
+
+For direct hardware interaction (connecting physical Arduino via serial USB):
+
+1. **Clone and build workspace:**
+   ```bash
+   cd arduinobot_ws
+   colcon build --symlink-install
+   source install/setup.bash
+   ```
+2. **Run in simulation:**
+   ```bash
+   ros2 launch arduinobot_bringup simulated_robot.launch.py
+   ```
+3. **Run on real hardware:**
+   With your Arduino connected via serial and loaded with the `ROBOT_CONTROL` firmware:
+   ```bash
+   ros2 launch arduinobot_bringup real_robot.launch.py
+   ```
 
 ---
 
