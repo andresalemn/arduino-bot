@@ -1,0 +1,27 @@
+# Enforce LF line endings for all text files (Linux/ROS2 compatibility)
+* text=auto eol=lf
+
+# Explicitly enforce LF for common source file types
+*.py    text eol=lf
+*.cpp   text eol=lf
+*.hpp   text eol=lf
+*.h     text eol=lf
+*.c     text eol=lf
+*.xml   text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.sh    text eol=lf
+*.launch.py text eol=lf
+
+# Binary files — do not touch line endings
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.zip   binary
+*.tar   binary
+*.gz    binary

@@ -14,6 +14,7 @@
 		}
 	],
 	"settings": {
+		"files.eol": "\n",
 		"files.associations": {
 			"*.msg": "msg",
 			"string": "cpp",
