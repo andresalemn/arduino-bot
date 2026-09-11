@@ -115,18 +115,18 @@
 			"valarray": "cpp"
 		},
 		"python.autoComplete.extraPaths": [
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_utils/local/lib/python3.10/dist-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_remote/local/lib/python3.10/dist-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_py_examples/lib/python3.10/site-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_msgs/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_utils/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_remote/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_py_examples/lib/python3.10/site-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_msgs/local/lib/python3.10/dist-packages",
 			"/opt/ros/humble/lib/python3.10/site-packages",
 			"/opt/ros/humble/local/lib/python3.10/dist-packages"
 		],
 		"python.analysis.extraPaths": [
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_utils/local/lib/python3.10/dist-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_remote/local/lib/python3.10/dist-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_py_examples/lib/python3.10/site-packages",
-			"/home/control/ros2/arduino-bot/arduinobot_ws/install/arduinobot_msgs/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_utils/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_remote/local/lib/python3.10/dist-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_py_examples/lib/python3.10/site-packages",
+			"${workspaceFolder}/arduinobot_ws/install/arduinobot_msgs/local/lib/python3.10/dist-packages",
 			"/opt/ros/humble/lib/python3.10/site-packages",
 			"/opt/ros/humble/local/lib/python3.10/dist-packages"
 		]
