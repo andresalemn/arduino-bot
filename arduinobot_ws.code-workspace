@@ -1,16 +1,20 @@
 {
 	"folders": [
 		{
-			"name": "Resources",
-			"path": "resources"
+			"name": "Root",
+			"path": "."
 		},
 		{
 			"name": "Arduinobot Workspace",
 			"path": "arduinobot_ws"
 		},
 		{
-			"name": "Platform IO Project",
+			"name": "Platform IO",
 			"path": "arduinobot_ws/src/arduinobot_firmware/platform-io"
+		},
+		{
+			"name": "Resources",
+			"path": "resources"
 		}
 	],
 	"settings": {
