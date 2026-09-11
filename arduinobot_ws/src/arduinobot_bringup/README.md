@@ -37,7 +37,7 @@ Composes the entire control and planning system for the real robot:
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws
 colcon build --packages-select arduinobot_bringup
 source install/setup.bash
 ```
