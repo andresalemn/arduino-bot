@@ -1,126 +1,157 @@
-# Arduinobot - ROS 2 & Arduino Robotic Arm Manipulator
+<h1 align="center">arduinobot</h1>
+<p align="center">Containerized ROS 2 Humble workspace running in Docker, targeting an Arduino-based robotic arm.</p>
 
-## Project Overview
-
-This repository serves as a personal archive, reference, and extended workspace for the code and hardware implementations developed while following the [Robotics and ROS 2 - Learn by Doing: Manipulators](https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/) course on Udemy. 
-
-The primary purpose is to preserve my learning journey, custom hardware modifications, and package improvements in an easily accessible format. It is not intended as an official or alternative distribution of the course materials, but rather as an archive of my hands-on implementation and custom enhancements.
-
----
-
-## About Arduinobot
-
-The Arduinobot is a 4-DOF desktop robotic arm constructed from 3D-printed links and driven by **MG90S metal-gear servo motors** (upgraded from the original course's SG90 plastic-gear servos). It utilizes an Arduino Uno for physical joint command execution and is simulated digitally inside Gazebo and MoveIt 2.
-
-### Custom Circuitry & PCA9685 Integration
-
-Unlike the original course baseline—which drives the servos directly from the Arduino Uno digital output pins using `Servo.h`—my implementation migrates joint control to the **PCA9685 16-Channel 12-Bit PWM Driver Shield** connected over I2C.
-
-This hardware modification offers several benefits:
-*   **Reduced Wiring:** Requires only 4 pins from the Arduino (5V, GND, SDA, SCL) to control all joints.
-*   **Dedicated Power Delivery:** Allows external 5V/6V power to be supplied directly to the servo terminals, protecting the Arduino from current spikes and brownouts.
-*   **Pin Optimization:** Frees up the remaining Arduino digital and analog pins for sensors, telemetry, or future expansions.
-
-Below is the Fritzing layout of the modified circuitry used for this project:
-
-![Fritzing Circuit Layout](./resources/Electronics/robot-electronics_bb.jpg)
+<p align="center">
+  <a href="https://docs.ros.org/en/humble/"><img src="https://img.shields.io/badge/ROS_2-Humble_LTS-4A4E9E?style=flat-square&logo=ros&logoColor=white" alt="ROS 2 Humble"></a>
+  <a href="https://ubuntu.com/"><img src="https://img.shields.io/badge/Ubuntu-22.04_LTS-D9581E?style=flat-square&logo=ubuntu&logoColor=white" alt="Ubuntu 22.04"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-Dev_Container-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker"></a>
+  <a href="LICENSE.txt"><img src="https://img.shields.io/badge/License-MIT-3C9D5C?style=flat-square&logo=opensourceinitiative&logoColor=white" alt="License MIT"></a>
+</p>
 
 ---
 
-## Repository Structure
+## Overview
 
-Here is a breakdown of the main directories and their contents:
+**arduinobot** is a 4-DOF desktop robotic arm constructed from 3D-printed links, driven by **MG90S metal-gear servo motors**, and controlled via ROS 2 Humble. 
 
-*   **[`arduinobot_ws/`](./arduinobot_ws/)**:
-    The main ROS 2 Colcon workspace containing package source code:
-    *   **[`arduinobot_bringup`](./arduinobot_ws/src/arduinobot_bringup)**: Launches the entire robot stack in simulation or on real hardware with a single command.
-    *   **[`arduinobot_controller`](./arduinobot_ws/src/arduinobot_controller)**: Defines the C++ `ros2_control` system interface (`ArduinobotInterface`) that handles serial packaging and transmission to the microcontroller.
-    *   **[`arduinobot_description`](./arduinobot_ws/src/arduinobot_description)**: Houses the URDF/Xacro models, visual and collision STL meshes, and custom Gazebo worlds.
-    *   **[`arduinobot_moveit`](./arduinobot_ws/src/arduinobot_moveit)**: MoveIt 2 configuration, kinematics solvers, and SRDF definition.
-    *   **[`arduinobot_remote`](./arduinobot_ws/src/arduinobot_remote)**: Implements Flask-based web service nodes acting as an endpoint for Alexa voice control commands.
-    *   **[`arduinobot_msgs`](./arduinobot_ws/src/arduinobot_msgs)**: Holds custom action (`ArduinobotTask`) and service definitions.
-    *   **[`arduinobot_utils`](./arduinobot_ws/src/arduinobot_utils)**: Includes nodes to convert rotation coordinates (Euler angles $\leftrightarrow$ Quaternions).
-    *   **[`arduinobot_firmware`](./arduinobot_ws/src/arduinobot_firmware)**: Hosts microcontroller entry points (`robot_control.cpp` for multi-joint control) and calibration/testing firmware.
-    *   **[`arduinobot_cpp_examples`](./arduinobot_ws/src/arduinobot_cpp_examples)** / **[`arduinobot_py_examples`](./arduinobot_ws/src/arduinobot_py_examples)**: Educational publisher, subscriber, service, and action templates.
+This repository serves as a personal archive, hardware modification workspace, and extended reference built upon the [Robotics and ROS 2 - Learn by Doing: Manipulators](https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/) course on Udemy by Antonio Brandi.
 
-*   **[`resources/`](./resources/)**:
-    Hardware design sheets, CAD files, and reference notes:
-    *   `BOM/`: Complete parts list and components spreadsheets.
-    *   `CAD/`: SolidWorks assembly (`Arm.SLDASM`) and component parts.
-    *   `Electronics/`: Fritzing schematics, custom parts, and wiring reference diagrams.
-    *   `Frames/`: Rendered coordinate TF transform tree maps.
-    *   `Notes/`: Rotation mathematical theory notes.
-    *   `Presentations/`: Course slide reference files.
-    *   `STL_3D_Print/` / `STL_Gazebo/`: STL meshes optimized for 3D printing and Gazebo loading.
+<!-- MEDIA: Main Project Banner or Digital Twin & Physical Hardware Side-by-Side Image -->
+<!-- <p align="center"> -->
+<!--   <img src="resources/media/gazebo_sim_demo.gif" width="48%" alt="Gazebo Simulation Demo" /> -->
+<!--   <img src="resources/media/physical_arm_demo.jpg" width="48%" alt="Physical Arm Manipulator" /> -->
+<!-- </p> -->
 
 ---
 
-## Usage & Execution Modes
+## Core Capabilities & Features
 
-Depending on your workflow and setup preference, you can run and develop on Arduinobot in two primary ways:
+- **🤖 Sim-to-Real Pipeline:** Seamless execution across digital twin simulation (Gazebo + RViz2) and physical hardware via custom `ros2_control` system interfaces.
+- **🧠 Trajectory Motion Planning:** Integrated **MoveIt 2** configuration with kinematics, joint limits, and collision avoidance for arm and parallel gripper planning groups.
+- **🗣️ Alexa Voice Remote Control:** Cloud-to-robot interface using Amazon Alexa Skills, forwarding voice intents (`Pick`, `Sleep`, `Wake`) through a Flask/ngrok bridge directly into ROS 2 action goals.
+- **👁️ Integrated Vision Simulation:** RGB camera sensor model mounted on the base link for visual inspection and future perception pipelines.
 
-### Option A: Containerized Environment (Docker / Dev Container) — Recommended for Sim
+---
 
-Avoid installing ROS 2, Gazebo, or MoveIt 2 directly on your host machine.
+## Key Enhancements & Infrastructure
 
-1. **VS Code Dev Container (Live Development):**
-   - Open this repo in VS Code and accept **"Reopen in Container"**.
-   - Workspace build and ROS 2 setup source automatically inside the container.
-   - Run simulation inside the container terminal:
-     ```bash
-     cd arduinobot_ws
-     ros2 launch arduinobot_bringup simulated_robot.launch.py
-     ```
-2. **Standalone Simulation Demo (Pre-built Evaluation Image):**
-   - Run Gazebo + MoveIt 2 simulation without building locally.
-   - See [Docker Simulation Demo Guide](./docs/docker/03-simulation-demo.md).
+This repository extends the original course baseline with custom hardware, software, and devops improvements:
 
-> For detailed Docker architecture, WSLg GUI configuration, and troubleshooting, see the [Docker Documentation](./docs/docker/01-overview.md).
+### ⚙️ Hardware Modifications
+- **MG90S Metal-Gear Servos:** Upgraded from SG90 plastic servos for higher torque and durability.
+- **PCA9685 16-Channel PWM Driver Shield:** Offloads joint PWM signals over I2C (`SDA`/`SCL`).
+- **Dedicated Servo Power Delivery:** External power terminal connection to protect the microcontroller from voltage dips and current spikes.
 
-### Option B: Native Host Environment (Ubuntu 22.04 + ROS 2 Humble) — Required for Real Hardware
+### 🚀 Software & Infrastructure Improvements
+- **Docker & Dev Container Workflow:** Instant, reproducible ROS 2 Humble development environment without local host dependencies.
+- **Microcontroller Integration:** Unified PlatformIO workspace structure alongside ROS 2 packages.
+- **Structured Documentation System:** Centralized guides covering hardware wiring, pulse calibration, Alexa voice control, and Docker setup.
+- **CI/CD Automation Ready:** Containerized simulation image setup for future automated GitHub Actions build pipelines.
 
-For direct hardware interaction (connecting physical Arduino via serial USB):
+> [!NOTE]
+> For complete wiring schematics and pulse tuning procedures, see the **[Electronics & PCA9685 Wiring Guide](./docs/hardware/electronics.md)** and **[Servo Pulse Calibration Tutorial](./docs/hardware/servo-calibration.md)**.
 
-1. **Clone and build workspace:**
+---
+
+## Software Features & ROS 2 Architecture
+
+The codebase is structured into modular ROS 2 packages inside [`arduinobot_ws/`](./arduinobot_ws/):
+
+| Package | Purpose & Features |
+|---|---|
+| [`arduinobot_bringup`](./arduinobot_ws/src/arduinobot_bringup) | Orchestrates full robot stack launching (Sim & Real) |
+| [`arduinobot_controller`](./arduinobot_ws/src/arduinobot_controller) | C++ `ros2_control` hardware interface (`ArduinobotInterface`) over serial |
+| [`arduinobot_description`](./arduinobot_ws/src/arduinobot_description) | URDF/Xacro kinematic models, STL meshes, and custom Gazebo worlds |
+| [`arduinobot_moveit`](./arduinobot_ws/src/arduinobot_moveit) | MoveIt 2 motion planning, kinematics configuration, and SRDF |
+| [`arduinobot_remote`](./arduinobot_ws/src/arduinobot_remote) | Flask server endpoint for **Alexa Voice Control** & task servers |
+| [`arduinobot_firmware`](./arduinobot_ws/src/arduinobot_firmware) | Microcontroller firmware (`robot_control.cpp`) & PlatformIO setup |
+| [`arduinobot_msgs`](./arduinobot_ws/src/arduinobot_msgs) | Custom action (`ArduinobotTask`) and service interface definitions |
+| [`arduinobot_utils`](./arduinobot_ws/src/arduinobot_utils) | Coordinate transformation utilities (Euler $\leftrightarrow$ Quaternions) |
+| [`arduinobot_cpp_examples`](./arduinobot_ws/src/arduinobot_cpp_examples) | Educational C++ ROS 2 templates (Publishers, Actions, Lifecycle) |
+| [`arduinobot_py_examples`](./arduinobot_ws/src/arduinobot_py_examples) | Educational Python ROS 2 templates |
+
+<!-- MEDIA: MoveIt 2 Motion Planning Animation / Video GIF -->
+<!-- <p align="center"> -->
+<!--   <img src="resources/media/moveit_planning_demo.gif" alt="MoveIt 2 Trajectory Planning" /> -->
+<!-- </p> -->
+
+---
+
+## Quick Start & Execution Modes
+
+### Option A: VS Code Dev Container (Recommended for Simulation)
+
+Develop without installing ROS 2, Gazebo, or MoveIt 2 on your host OS.
+
+1. Open this repository in **VS Code** and select **"Reopen in Container"**.
+2. Run simulation inside the container terminal:
    ```bash
    cd arduinobot_ws
-   colcon build --symlink-install
-   source install/setup.bash
-   ```
-2. **Run in simulation:**
-   ```bash
    ros2 launch arduinobot_bringup simulated_robot.launch.py
    ```
-3. **Run on real hardware:**
-   With your Arduino connected via serial and loaded with the `ROBOT_CONTROL` firmware:
-   ```bash
-   ros2 launch arduinobot_bringup real_robot.launch.py
-   ```
+
+> [!TIP]
+> For complete environment details, see the **[Dev Container Setup Guide](./docs/docker/02-devcontainer-setup.md)** or try the **[Standalone Simulation Demo](./docs/docker/03-simulation-demo.md)**.
+
+### Option B: Native Host Environment (Required for Physical Robot)
+
+To operate the real arm connected via USB serial:
+
+```bash
+cd arduinobot_ws
+colcon build --symlink-install
+source install/setup.bash
+ros2 launch arduinobot_bringup real_robot.launch.py
+```
 
 ---
 
-## Instructor's Resources & Thanks
+## Voice Remote Control (Alexa Integration)
 
-I extend my sincerest gratitude to **[@Antonio Brandi](https://github.com/AntoBrandi)** for creating this comprehensive course on robot manipulation and ROS 2. 
+Control arduinobot using custom voice commands ("Alexa, tell my arduinobot to pick"):
 
-I highly recommend this course to anyone looking to master robot modeling, kinematics, control, and sim-to-real workflows. Antonio's step-by-step practical style makes complex topics highly approachable.
+<!-- MEDIA: Alexa Voice Control Sequence / Video Placeholder -->
+<!-- <p align="center"> -->
+<!--   <img src="resources/media/alexa_voice_demo.gif" alt="Alexa Voice Control Demo" /> -->
+<!-- </p> -->
 
-Anto runs **[Learn by doing](https://learnbydoing.dev)**, offering excellent tutorials and guides. The baseline code files for this course can be found in the original GitHub repositories:
-*   [Arduino-Bot Repository](https://github.com/AntoBrandi/Arduino-Bot)
-*   [Robotics & ROS 2 Manipulators Course Repository](https://github.com/AntoBrandi/Robotics-and-ROS-2-Learn-by-Doing-Manipulators)
+- **[1. Alexa Skills Introduction](./docs/alexa/1_introduction.md)**
+- **[2. System Architecture & Request Flow](./docs/alexa/2_architecture.md)**
+- **[3. Flask Backend & Ngrok Setup](./docs/alexa/3_flask_ngrok_setup.md)**
+- **[4. Usage Tutorial & Troubleshooting](./docs/alexa/4_usage_tutorial.md)**
+
+---
+
+## Documentation Sitemap
+
+All project documentation is organized under the [`docs/`](./docs/) directory:
+
+- 🐳 **[Docker & Dev Container Documentation](./docs/docker/01-overview.md)**
+- ⚡ **[Electronics & Hardware Setup](./docs/hardware/electronics.md)**
+- 🎯 **[Servo Pulse Calibration](./docs/hardware/servo-calibration.md)**
+- 🗣️ **[Alexa Voice Skill Documentation](./docs/alexa/1_introduction.md)**
+- 🗺️ **[Engineering & RobotOps Roadmap](./docs/ROADMAP.md)**
+
+---
+
+## Acknowledgements & Credits
+
+Sincere thanks to **[Antonio Brandi](https://github.com/AntoBrandi)** for creating the course *Robotics and ROS 2 - Learn by Doing: Manipulators*.
+
+- **Course:** [Robotics & ROS 2 - Manipulators on Udemy](https://www.udemy.com/course/robotics-and-ros-2-learn-by-doing-manipulators/)
+- **Tutorials:** [Learn by doing](https://learnbydoing.dev)
+- **Original Baseline Repo:** [AntoBrandi/Arduino-Bot](https://github.com/AntoBrandi/Arduino-Bot)
 
 ---
 
 ## License
 
-This content is for personal educational use. My custom code implementations and modifications are provided "as is" under the [MIT License](LICENSE.txt).
+My custom code implementations and hardware modifications are provided under the [MIT License](LICENSE.txt).
 
 ---
 
 ## Contact
 
-Feel free to connect or reach out regarding questions, feedback, or collaborations:
-
-*   **Personal Website:** [andresalemn.github.io](https://andresalemn.github.io)
-*   **GitHub:** [andresalemn](https://github.com/andresalemn)
-*   **LinkedIn:** [andresalemn](https://www.linkedin.com/in/andresalemn)
+- **Website:** [andresalemn.github.io](https://andresalemn.github.io)
+- **GitHub:** [@andresalemn](https://github.com/andresalemn)
+- **LinkedIn:** [andresalemn](https://www.linkedin.com/in/andresalemn)
