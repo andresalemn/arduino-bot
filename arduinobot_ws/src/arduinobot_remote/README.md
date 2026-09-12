@@ -18,11 +18,6 @@ arduinobot_remote/
 ├── arduinobot_remote/            # Python module
 │   ├── alexa_interface.py        # Flask server + ROS 2 action client
 │   └── task_server.py            # Python MoveItPy task action server
-├── doc/alexa/                    # Alexa skill architecture and setup guides
-│   ├── 1_introduction.md          # Alexa Skill concepts (intents, utterances)
-│   ├── 2_architecture.md          # System request flow diagram
-│   ├── 3_flask_ngrok_setup.md     # Installation and HTTPS tunneling setup
-│   └── 4_usage_tutorial.md        # Interactive testing & troubleshooting
 ├── include/                      # C++ headers
 ├── launch/
 │   └── remote_interface.launch.py # Top-level launcher for task server and Flask
@@ -31,6 +26,16 @@ arduinobot_remote/
 ├── CMakeLists.txt
 └── package.xml
 ```
+
+---
+
+## Documentation
+
+Full architectural guides, Flask setup, and Alexa Voice Skill workflows are documented under the central repository docs:
+- [1. Alexa Skills Introduction](../../../docs/alexa/1_introduction.md)
+- [2. System Architecture & Request Flow](../../../docs/alexa/2_architecture.md)
+- [3. Flask Backend & Ngrok Setup](../../../docs/alexa/3_flask_ngrok_setup.md)
+- [4. Usage Tutorial & Troubleshooting](../../../docs/alexa/4_usage_tutorial.md)
 
 ---
 
@@ -66,7 +71,7 @@ Brings up the remote task server (C++ or Python) and the Flask receiver interfac
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws
 colcon build --packages-select arduinobot_remote
 source install/setup.bash
 ```
@@ -87,7 +92,7 @@ ros2 launch arduinobot_remote remote_interface.launch.py
 ros2 launch arduinobot_remote remote_interface.launch.py use_python:=True
 ```
 
-*Note: For complete setup details including ngrok configurations and Alexa skills mapping, refer to [Flask/Ngrok Setup Guide](doc/alexa/3_flask_ngrok_setup.md).*
+*Note: For complete setup details including ngrok configurations and Alexa skills mapping, refer to [Flask Backend & Ngrok Setup Guide](../../../docs/alexa/3_flask_ngrok_setup.md).*
 
 ---
 

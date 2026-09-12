@@ -22,7 +22,6 @@ arduinobot_firmware/
 │   ├── simple_serial_receiver.py # Python serial receiver node
 │   └── simple_serial_transmitter.py # Python serial transmitter node
 ├── doc/tutorials/
-│   ├── servo_find_pulse.md     # Step-by-step pulse calibration guide
 │   ├── simple_serial_bridge.md # Receiver/Transmitter usage and test guide
 │   └── simple_servo.md         # Serial command and single-servo control guide
 ├── include/
@@ -98,7 +97,7 @@ PlatformIO environments are configured in [`platform-io/platformio.ini`](platfor
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws
 colcon build --packages-select arduinobot_firmware
 source install/setup.bash
 ```
@@ -115,10 +114,11 @@ ros2 run arduinobot_firmware simple_serial_transmitter --ros-args -p port:=/dev/
 
 ---
 
-## Tutorials
+## Tutorials & Hardware Guides
 
 Detailed procedures are documented in:
-* [Servo Pulse Calibration Tutorial](doc/tutorials/servo_find_pulse.md)
+* [Servo Pulse Calibration Tutorial](../../../docs/hardware/servo-calibration.md)
+* [Electronics & PCA9685 Wiring Guide](../../../docs/hardware/electronics.md)
 * [Usage tutorial: simple_servo_control.cpp](doc/tutorials/simple_servo.md)
 * [ROS 2 Serial Bridge Tutorial (Receivers and Transmitters)](doc/tutorials/simple_serial_bridge.md)
 
