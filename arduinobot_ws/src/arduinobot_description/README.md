@@ -48,8 +48,9 @@ arduinobot_description/
 
 ## Robot model
 
-The ArduinoBot is a 5-DOF desktop robotic arm with a parallel-jaw gripper and
-a fixed RGB camera. All meshes are scaled at 0.01 in all axes (source STL
+The ArduinoBot is a 4-DOF desktop robotic arm (three arm joints plus a
+parallel-jaw gripper) with a fixed RGB camera. The gripper's second finger
+(`joint_5`) is a mimic joint and does not add an independent degree of freedom. All meshes are scaled at 0.01 in all axes (source STL
 units are millimetres; URDF units are metres).
 
 ### Links
@@ -166,7 +167,7 @@ ros2 launch arduinobot_description gazebo.launch.py
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws   # from the repository root
 colcon build --packages-select arduinobot_description
 source install/setup.bash
 ```

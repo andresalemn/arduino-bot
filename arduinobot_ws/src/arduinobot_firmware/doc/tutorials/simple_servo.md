@@ -24,13 +24,14 @@ Go through this list before trying to send any commands. Most "it doesn't work" 
   If `dialout` is not listed, add yourself and re-login (see Troubleshooting).
 - [ ] The `arduinobot_firmware` ROS2 package is built:
   ```bash
-  cd ~/ros2/arduino-bot/arduinobot_ws
+  cd arduinobot_ws   # from the repository root
   colcon build --packages-select arduinobot_firmware
   ```
 - [ ] The workspace is sourced in every terminal you use:
   ```bash
-  source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+  source install/setup.bash   # from arduinobot_ws/
   ```
+  Run all commands from `arduinobot_ws/` at the root of your clone (`/home/developer/workspace/arduinobot_ws` inside the dev container).
 - [ ] Baud rate matches on both ends (115200 in this setup) — this is already hardcoded in both the node and the sketch, but worth remembering if you ever change one side.
 - [ ] The PCA9685 shield is powered from an external 5–6V supply (not just USB) if you're driving MG90S servos, with grounds tied together.
 
@@ -39,7 +40,7 @@ Go through this list before trying to send any commands. Most "it doesn't work" 
 ## Step 1 — Open a Terminal and Source the Workspace
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws   # from the repository root
 source install/setup.bash
 ```
 
@@ -64,7 +65,7 @@ If your board enumerates on a different port, substitute it here (e.g. `/dev/tty
 Open a **second terminal**, source the workspace again, then check:
 
 ```bash
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 node list
 ros2 topic list
 ```
@@ -148,11 +149,11 @@ Then either log out and back in, or run `newgrp dialout` in your current termina
 
 ```bash
 # Terminal 1 — launch the bridge node
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 run arduinobot_firmware simple_serial_transmitter --ros-args -p port:=/dev/ttyACM0
 
 # Terminal 2 — verify and send commands
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 node list
 ros2 topic list
 ros2 topic pub /serial_transmitter std_msgs/msg/String "data: '90'" --once

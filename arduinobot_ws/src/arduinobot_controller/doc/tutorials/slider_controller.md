@@ -40,10 +40,13 @@ The recommended way to confirm that the slider pipeline works end-to-end
 is to run Gazebo alongside the slider launch. Open **three terminals**,
 all sourced from the same workspace.
 
+> **Note:** Run all commands from `arduinobot_ws/` at the root of your
+> clone (`/home/developer/workspace/arduinobot_ws` inside the dev container).
+
 #### Terminal 1 — Build the workspace
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws   # from the repository root
 colcon build --symlink-install
 source install/setup.bash
 ```
@@ -55,7 +58,7 @@ source install/setup.bash
 #### Terminal 2 — Launch Gazebo
 
 ```bash
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 launch arduinobot_description gazebo.launch.py
 ```
 
@@ -66,14 +69,14 @@ robot appears in the Gazebo viewport before continuing.
 #### Terminal 3a — Launch the slider (Python node, default)
 
 ```bash
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 launch arduinobot_controller slider_controller.launch.py
 ```
 
 #### Terminal 3b — Launch the slider (C++ node)
 
 ```bash
-source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ros2 launch arduinobot_controller slider_controller.launch.py use_cpp:=True
 ```
 

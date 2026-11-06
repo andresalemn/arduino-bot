@@ -141,7 +141,7 @@ client.
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws   # from the repository root
 colcon build --packages-select arduinobot_controller --symlink-install
 source install/setup.bash
 ```

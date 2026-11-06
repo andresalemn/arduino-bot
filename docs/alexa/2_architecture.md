@@ -6,7 +6,7 @@ This document details the system architecture of the remote control interface an
 
 ## Technical Overview
 
-The remote interface runs two concurrent systems inside the [alexa_interface.py](../../arduinobot_remote/alexa_interface.py) node:
+The remote interface runs two concurrent systems inside the [alexa_interface.py](../../arduinobot_ws/src/arduinobot_remote/arduinobot_remote/alexa_interface.py) node:
 1. **Python Flask Web Server**: Listens for HTTP requests sent by the Alexa Voice Service.
 2. **ROS 2 Action Client**: Sends goals to the `task_server` node to move the robot.
 

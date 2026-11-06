@@ -122,7 +122,7 @@ directly with `ros2 run` (see below).
 ## Build
 
 ```bash
-cd ~/ros2/arduino-bot/arduinobot_ws
+cd arduinobot_ws   # from the repository root
 colcon build --packages-select arduinobot_cpp_examples
 source install/setup.bash
 ```

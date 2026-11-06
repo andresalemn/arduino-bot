@@ -6,9 +6,11 @@ This tutorial explains how to compile, launch, and test the ROS 2 serial receive
 
 ## Prerequisites
 
+> **Note:** Run all commands from `arduinobot_ws/` at the root of your clone (`/home/developer/workspace/arduinobot_ws` inside the dev container).
+
 - The `arduinobot_firmware` ROS 2 package is built:
   ```bash
-  cd ~/ros2/arduino-bot/arduinobot_ws
+  cd arduinobot_ws   # from the repository root
   colcon build --packages-select arduinobot_firmware
   ```
 - Your user belongs to the `dialout` group:
@@ -18,7 +20,7 @@ This tutorial explains how to compile, launch, and test the ROS 2 serial receive
   If missing, run `sudo usermod -aG dialout $USER` and log back in.
 - The workspace is sourced in all active terminals:
   ```bash
-  source ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+  source install/setup.bash   # from arduinobot_ws/
   ```
 - The target Arduino is plugged in. Determine its port (typically `/dev/ttyACM0` or `/dev/ttyUSB0`) via:
   ```bash

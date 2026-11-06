@@ -9,10 +9,12 @@ messages when it is in the **active** state.
 
 - The workspace has been built and sourced.
 - Three separate terminal windows are available.
+- All commands are run from `arduinobot_ws/` at the root of your clone
+  (`/home/developer/workspace/arduinobot_ws` inside the dev container).
 
 ```bash
 # Run in every terminal before the steps below
-. ~/ros2/arduino-bot/arduinobot_ws/install/setup.bash
+source install/setup.bash   # from arduinobot_ws/
 ```
 
 ---
